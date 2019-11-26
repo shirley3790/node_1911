@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>获取数据</title>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <input type="button" value="获取数据" id="btn">
+        <ul class="list-group">
+            <!-- <li class="list-group-item">Cras justo odio</li> -->
+
+        </ul>
+    </div>
+</body>
+<script>
+    (() => {
+        //获取数据:本地：http://localhost:1008 获取https://m.weibo.cn/api/config/list
+        $('#btn').click(() => {
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:9080',//直接写微博的接口会报错，拿不到数据，因为存在跨域，让后端处理接口
+                dataType: 'json',//ajax把字符串转成对象
+                success: str => {
+                    console.log(str);
+                    creat(str);
+                }
+            });
+
+
+            //数据渲染
+            function creat(data) {
+                // let arr = JSON.parse(data);
+                let str = data.data.channel.map(item => {
+                    return `<li class="list-group-item">${item.name}</li>`;
+                }).join('');
+
+                $('.list-group').html(str);
+            }
+        });
+    })();
+</script>
+
+</html>

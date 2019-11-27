@@ -9,14 +9,14 @@
 </head>
 
 <body>
-    <input type="text" name="" id="keyword">
+    <input type="button" name="" id="btn" value="获取jsonp数据">
     <ul id="list">
         <!-- <li>html5</li>
         <li>html5</li>
         <li>html5</li> -->
     </ul>
 </body>
-<script src="js/jquery-1.10.1.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <script>
     /*
         百度接口：
@@ -34,7 +34,7 @@
     (function () {
 
         //边写边请求 oninput
-        $('#keyword').on('input', function () {
+        $('#btn').on('click', function () {
             // console.log(666);
             let p = new Promise(function (resolve) {
                 $.ajax({

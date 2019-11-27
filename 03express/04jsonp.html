@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度搜索引擎</title>
+</head>
+
+<body>
+    <input type="text" name="" id="keyword">
+    <ul id="list">
+        <!-- <li>html5</li>
+        <li>html5</li>
+        <li>html5</li> -->
+    </ul>
+</body>
+<script src="js/jquery-1.10.1.min.js"></script>
+<script>
+    /*
+        百度接口：
+        https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?cb=getData&wd=html5
+
+        关键字接口：
+        https://www.baidu.com/s?ie=utf-8&wd=关键字
+
+        jsonp的使用：按需加载
+            * 要用的时候再创建script引入这个资源(设置好src)
+            * 请求次数过多：限制次数，定时器
+            * 创建的script过多：用完就删掉
+    */
+
+    (function () {
+
+        //边写边请求 oninput
+        $('#keyword').on('input', function () {
+            // console.log(666);
+            let p = new Promise(function (resolve) {
+                $.ajax({
+                    type: 'get',
+                    // url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                    url: 'https://quotes.money.163.com/fu/service/furank.php?host=/fu/service/furank.php&page=0&query=EXCHANGE:FG&fields=no,NAME,PRICE,UPDOWN,PERCENT,TIME&sort=UPDOWN&order=desc&count=16&type=FG',
+                    data: {
+                        wd: $('#keyword').val()
+                    },
+                    jsonp: 'callback',//写参数名字：接收函数名的参数，一般是cb或callback
+                    dataType: 'jsonp',//jsonp的跨域
+                    success: str => {
+                        console.log(str);
+                        resolve(str);
+                    }
+
+                })
+            });
+
+            p.then(function (data) {
+                //渲染数据
+            });
+        });
+    })();
+</script>
+
+</html>

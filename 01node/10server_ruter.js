@@ -11,6 +11,9 @@ let app = http.createServer((req, res) => {
     // console.log(req.url);//请求对象
     //简单的路由设置：前端传过来的url是虚拟，路由可以是真url。假的路径
     switch (req.url) {
+        case '/':
+            res.end('欢迎访问服务器');
+            break;
         case '/home':
             res.end('首页');
             break;

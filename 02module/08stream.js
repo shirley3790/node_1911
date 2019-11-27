@@ -13,13 +13,13 @@ let readstream = fs.createReadStream('./data.txt');
 let str = '';
 readstream.on('data', chunk => {
     // console.log(chunk);
-    str += chunk;//把buffer一段段的拼接起来
+    str += chunk;//把buffer一段段的拼接起来 chunk二进制
     // console.log(chunk.toString());
 });
 
 //用end事件监测是否已经完成
 readstream.on('end', () => {
-    console.log(str.toString());
+    console.log(str);//拿到数据：字符串
 });
 
 
@@ -32,7 +32,7 @@ wristr.write('我们都一样');
 wristr.write('都是58bc58');
 
 //写完了
-wristr.end();
+wristr.end();//必须写end
 
 wristr.on('finish', () => {
     console.log('写入完毕');

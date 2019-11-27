@@ -35,11 +35,11 @@ http.createServer((req, res) => {
         // res.end('欢迎访问服务器');//返回数据并结束  over
         res.end(data);//返回数据并结束  over  必须写end
     });
-    res.end('欢迎访问服务器');
+    // res.end('欢迎访问服务器');
 
-}).listen(1008, () => {
+}).listen(10111, () => {
     //成功开启服务器了就会执行这里的代码
-    console.log('服务器已经开启，请访问：http://localhost:1008');
+    console.log('服务器已经开启，请访问：http://localhost:10111');
 });
 
 

@@ -8,12 +8,13 @@
 */
 
 const express = require('express');//函数
+//开启服务器
 const app = express();//调用express函数得到一个对象：属性 方法
 
 //开启静态资源服务器
 app.use(express.static('./'));//express.static()中间件
 
-//开启服务器
+//端口号的监听
 app.listen(5566, () => {
     console.log('服务器开启了，请访问localhost:5566');
 });

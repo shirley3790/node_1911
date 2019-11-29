@@ -41,9 +41,6 @@
                     type: 'get',
                     // url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
                     url: 'https://quotes.money.163.com/fu/service/furank.php?host=/fu/service/furank.php&page=0&query=EXCHANGE:FG&fields=no,NAME,PRICE,UPDOWN,PERCENT,TIME&sort=UPDOWN&order=desc&count=16&type=FG',
-                    data: {
-                        wd: $('#keyword').val()
-                    },
                     jsonp: 'callback',//写参数名字：接收函数名的参数，一般是cb或callback
                     dataType: 'jsonp',//jsonp的跨域
                     success: str => {

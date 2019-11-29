@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度搜索引擎</title>
+</head>
+
+<body>
+    <input type="button" name="" id="btn" value="获取jsonp数据">
+    <ul id="list">
+        <!-- <li>html5</li>
+        <li>html5</li>
+        <li>html5</li> -->
+    </ul>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+
+    // (function () {
+
+    //     //边写边请求 oninput
+    //     $('#btn').on('click', function () {
+    //         // console.log(666);
+    //         let p = new Promise(function (resolve) {
+    //             $.ajax({
+    //                 type: 'get',
+    //                 // url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+    //                 url: 'http://lol.duowan.com/s/zzqdata.js?_=1574843213068',
+    //                 jsonp: 'callback',//写参数名字：接收函数名的参数，一般是cb或callback
+    //                 dataType: 'jsonp',//jsonp的跨域
+    //                 success: str => {
+    //                     console.log(str);
+    //                     resolve(str);
+    //                 }
+
+    //             })
+    //         });
+
+    //         p.then(function (data) {
+    //             //渲染数据
+    //         });
+    //     });
+    // })();
+</script>
+<script>
+    function zzqjsonp(data) {
+        console.log(data);
+    }
+</script>
+<script src="http://lol.duowan.com/s/zzqdata.js?callback=zzqjsonp&_=1574843213068"></script>
+
+</html>

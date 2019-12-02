@@ -1,3 +1,4 @@
+
 /*
     主入口：查询数据的，都来这里处理  封装query，调用即可，返回查询结果
         * mysql
@@ -5,9 +6,9 @@
 */
 
 const mysql = require('./mysql');
-// const mongoDB = require('./mongo');
+const mongo = require('./mongo');
 
 module.exports = {
-    mysql
-    // mongo
+    mysql,
+    mongo
 }

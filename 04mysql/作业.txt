@@ -8,3 +8,12 @@
 mongoDB: mongodb-win32-x86_64-2012plus-4.2.1-signed.msi mongoDB数据库
 ROBO: robo3t-1.3.1-windows-x86_64-7419c406.exe 非关系数据库界面工具
 postman:测试接口app
+
+
+12-2作业
+
+1.封装mongo.js模块。
+
+2.把二阶段的功能再做一次。
+
+3.弄懂token的使用，了解md5加密

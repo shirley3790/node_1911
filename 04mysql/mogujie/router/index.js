@@ -7,6 +7,8 @@ const express = require('express');//模块访问：缓存
 
 const Router = express.Router();//express自带的中间件，路由设置 Router==app
 
+Router.use(express.urlencoded({}));//为了获取req.body里面的数据
+
 // Router.use((req, res, next) => { //测试
 //     res.send('已经进入总路由了');
 // });

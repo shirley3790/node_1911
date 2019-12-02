@@ -17,6 +17,7 @@
     "zlib": "^1.0.5"
   },
   "devDependencies": {
+    "mongodb": "^3.3.5",
     "mysql": "^2.17.1"
   }
 }

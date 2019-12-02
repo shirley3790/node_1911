@@ -9,5 +9,5 @@ const mysql = require('./mysql');
 
 module.exports = {
     mysql
-    // mongoDB
+    // mongo
 }

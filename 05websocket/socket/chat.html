@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>多人聊天室</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .msg-list {
+            position: relative;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .msg-list ul {
+            padding: 10px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .msg-list li {
+            float: left;
+            clear: both;
+            margin: 10px 0;
+            padding: 5px;
+            line-height: 2;
+            border-radius: 5px;
+            background-color: #efefef;
+        }
+
+        .msg-list li h4 {
+            margin: 0;
+            margin-bottom: 10px
+        }
+
+        .msg-list li.active {
+            float: right;
+            background-color: #58bc58;
+            color: #fff;
+        }
+
+        .msg-list textarea {
+            display: block;
+            min-height: 50px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .status {
+            display: none;
+            position: absolute;
+            left: 50px;
+            bottom: 0;
+            right: 0;
+            padding: 5px 10px;
+            text-align: center;
+            color: #999;
+        }
+
+        .login {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>多人聊天室</h1>
+    <div id="autoAnswer" class="msg-list">
+        <div class="login"><input type="text" name="username" id="username"><button class="btn-login">进入</button><button
+                class="btn-logout">退出</a></div>
+        <ul>
+        </ul>
+        <textarea></textarea>
+        <button class="btn-send">提交</button>
+        <div class="status"></div>
+    </div>
+    <script>
+        (function () {
+			/**
+			 * 客户端Socket
+			    * HTML5新特性：WebSocket
+            
+                前后端协商数据格式:{data,status}
+                
+				status:
+					0:退出登录
+					1:登录成功
+					2:发送消息
+				data:{username,content,time}
+			 */
+            let autoAnswer = document.querySelector('#autoAnswer');
+            let login = autoAnswer.querySelector('.login');
+            let username = login.children[0];
+            let btnLogin = login.children[1];
+            let btnLogout = login.children[2];
+
+            let msglist = autoAnswer.querySelector('ul');
+            let msg = autoAnswer.querySelector('textarea');
+            let btnSend = autoAnswer.querySelector('.btn-send');
+            let status = autoAnswer.querySelector('.status');
+
+            let socket;
+            let contentlist = [];//存服务器传过来的聊天消息
+            //客户端：建立连接
+            function setData(status, username, content) {
+                let data = {
+                    status,
+                    data: {
+                        username,
+                        content,
+                        time: Date.now()
+                    }
+                }
+                return JSON.stringify(data);
+            }
+
+            btnLogin.onclick = () => {
+                if (username.value.trim()) {
+
+                    //建立连接
+                    socket = new WebSocket('ws://localhost:1911');
+
+                    //检测连接成功状态
+                    socket.onopen = () => {
+                        username.disabled = true;
+                        //连接数据库就会触发
+                        //1 登录成功
+                        let str = setData(1, username.value.trim(), '我登陆了');
+                        socket.send(str);
+                    }
+
+                    //接收服务器消息
+                    socket.onmessage = e => {
+                        // console.log(e.data);
+                        let data = JSON.parse(e.data);
+                        if (data.status == 1) {
+                            //1 登陆成功 和 0 退出
+                            status.style.display = 'block';
+                            status.innerHTML = data.data.username + '进入聊天室';
+                        }
+
+                        if (data.status == 2) {
+                            //发送的消息，服务器广播出来的消息
+                            //{status：2,data：{}}
+                            contentlist.push(data.data);//[{},{},{}]
+                            createList();
+                        }
+
+                        if (data.status == 0) {
+                            status.style.display = 'block';
+                            status.innerHTML = data.data.username + '退出聊天室';
+                        }
+                    }
+
+                    //退出的时候
+                    socket.onclose = () => {
+                        username.disabled = false;//表单可用
+                    }
+                }
+
+            }
+
+
+            //渲染数据函数
+            function createList() {
+                let html = contentlist.map(item => {
+                    return `<li ${item.username === username.value ? 'class="active"' : ''}>
+                                <h4>${item.username}：</h4>
+                                <div>${item.content}</div>
+                                <time>${new Date(item.time).toLocaleString()}</time>
+                        </li>`;
+                }).join('\n');
+                msglist.innerHTML = html;//渲染数据
+            }
+
+            //发送消息
+            btnSend.onclick = () => {
+                if (msg.value.trim()) {
+                    //2 发送消息
+                    let str = setData(2, username.value.trim(), msg.value.trim());
+                    socket.send(str);
+                    msg.value = '';
+                }
+
+            }
+
+            //点击退出
+            btnLogout.onclick = () => {
+                //0 代表退出
+                let str = setData(0, username.value.trim(), '我走啦');
+                socket.send(str);
+                socket.close();
+            }
+        })();
+    </script>
+</body>
+
+</html>

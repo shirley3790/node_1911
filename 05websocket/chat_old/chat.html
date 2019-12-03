@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>多人聊天室</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .msg-list {
+            position: relative;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .msg-list ul {
+            padding: 10px;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+
+        .msg-list li {
+            float: left;
+            clear: both;
+            margin: 10px 0;
+            padding: 5px;
+            line-height: 2;
+            border-radius: 5px;
+            background-color: #efefef;
+        }
+
+        .msg-list li h4 {
+            margin: 0;
+            margin-bottom: 10px
+        }
+
+        .msg-list li.active {
+            float: right;
+            background-color: #58bc58;
+            color: #fff;
+        }
+
+        .msg-list textarea {
+            display: block;
+            min-height: 50px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .status {
+            display: none;
+            position: absolute;
+            left: 50px;
+            bottom: 0;
+            right: 0;
+            padding: 5px 10px;
+            text-align: center;
+            color: #999;
+        }
+
+        .login {
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>多人聊天室</h1>
+    <div id="autoAnswer" class="msg-list">
+        <div class="login"><input type="text" name="username" id="username"><button class="btn-login">进入</button><button
+                class="btn-logout">退出</a></div>
+        <ul>
+        </ul>
+        <textarea></textarea>
+        <button class="btn-send">提交</button>
+        <div class="status"></div>
+    </div>
+    <script>
+        (function () {
+			/**
+			 * 客户端Socket
+			    * HTML5新特性：WebSocket
+            
+                前后端协商数据格式:{data,status}
+                
+				status:
+					0:退出登录
+					1:登录成功
+					2:发送消息
+				data:{username,content,time}
+			 */
+            let autoAnswer = document.querySelector('#autoAnswer');
+            let login = autoAnswer.querySelector('.login');
+            let username = login.children[0];
+            let btnLogin = login.children[1];
+            let btnLogout = login.children[2];
+
+            let msglist = autoAnswer.querySelector('ul');
+            let msg = autoAnswer.querySelector('textarea');
+            let btnSend = autoAnswer.querySelector('.btn-send');
+            let status = autoAnswer.querySelector('.status');
+
+            var socket;
+            let datalist = [];
+
+            // 进入聊天室
+            btnLogin.onclick = () => {
+                let _username = username.value;
+
+                //连接 socket 服务器
+                socket = new WebSocket('ws://localhost:1915');
+
+                // 连接服务器成功执行onopen事件
+                socket.onopen = () => {
+                    console.log('连接服务器成功')
+
+                    // 改变用户输入状态
+                    username.disabled = true;
+
+                    // 告诉其他用户我登录成功
+                    let data = {
+                        status: 1,
+                        data: {
+                            username: username.value,
+                            time: Date.now()
+                        }
+                    }
+                    socket.send(JSON.stringify(data))
+                }
+
+                // 监听断开操作
+                socket.onclose = () => {
+                    console.log('与服务器断开连接')
+                    username.disabled = false;
+
+
+                }
+
+                // 监听服务器广播的消息
+                socket.onmessage = (e) => {
+                    console.log('event:', e)
+                    let res = JSON.parse(e.data)
+                    if (res.status === 1) {
+                        status.style.display = 'block';
+                        status.innerHTML = `${res.data.username} 进入聊天室`
+                    } else if (res.status === 0) {
+                        status.style.display = 'block';
+                        status.innerHTML = `${res.data.username} 退出聊天室`
+                    } else if (res.status === 2) {
+
+                        datalist.push(res.data)
+                        // 渲染数据
+                        render();
+                    }
+                }
+            }
+
+            // 退出
+            btnLogout.onclick = () => {
+                // 告诉其他用户我登录成功
+                let data = {
+                    status: 0,
+                    data: {
+                        username: username.value,
+                        time: Date.now()
+                    }
+                }
+                socket.send(JSON.stringify(data))
+
+                // 断开与服务器的连接
+                socket.close()
+            }
+
+            // 发送消息
+            btnSend.onclick = () => {
+                if (!socket) {
+                    alert('请先进入聊天室');
+                    username.focus();
+                    return;
+                }
+                let _msg = msg.value;
+                let data = {
+                    status: 2,
+                    data: {
+                        username: username.value,
+                        content: _msg,
+                        time: Date.now()
+                    }
+                }
+                socket.send(JSON.stringify(data))
+
+                msg.value = '';
+                msg.focus();
+            }
+
+            function render() {
+                msglist.innerHTML = datalist.map(item => {
+                    return `<li ${item.username === username.value ? 'class="active"' : ''}>
+                        <h4>${item.username}：</h4>
+                        <div>${item.content}</div>
+                        <time>${new Date(item.time).toLocaleString()}</time>
+                        </li>`
+                }).join('\n')
+
+                msglist.lastElementChild.scrollIntoView();
+
+            }
+        })();
+    </script>
+</body>
+
+</html>

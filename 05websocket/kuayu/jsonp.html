@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>jsonp跨域</h1>
+    <input type="button" id="btn" value="获取数据">
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+
+    // $('#btn').click(() => {
+    //     //不是跨域
+    //     //http://localhost:1911/jsonp.html
+    //     //http://localhost:1911/app.js
+    //     ///http://localhost:1912/app.js
+    //     $.ajax({
+    //         type: 'get',
+    //         url: 'http://localhost:1912/jsonp',//'Access-Control-Allow-Origin' 现在就属于跨域
+    //         dataType: 'json',
+    //         success: data => {
+    //             console.log(data);
+    //         }
+    //     })
+    // });
+
+    $('#btn').click(() => {
+        //不是跨域
+        //http://localhost:1911/jsonp.html
+        //http://localhost:1911/app.js
+        ///http://localhost:1912/app.js
+        $.ajax({
+            type: 'get',
+            url: 'http://localhost:1912/jsonp',//'Access-Control-Allow-Origin' 现在就属于跨域
+            dataType: 'jsonp',
+            jsonp: 'callback',
+            success: data => {
+                console.log(data);
+            }
+        })
+    });
+
+
+</script>
+<script>
+    //全局函数
+    // function getdata(data) {
+    //     console.log(data);
+    // }
+
+    // ; (() => {
+    //     //全局函数
+    //     let script = null;
+    //     window.getdata = function (data) {
+    //         console.log(data);
+    //         document.documentElement.removeChild(script);
+    //     }
+
+    //     let btn = document.querySelector('#btn');
+    //     btn.onclick = function () {
+    //         // console.log(666);
+    //         script = document.createElement('script');
+    //         script.src = 'http://localhost:1912/jsonp?callback=getdata';
+    //         document.documentElement.appendChild(script);
+    //     }
+
+    // })();
+</script>
+<!-- <script src="http://localhost:1912/jsonp?callback=getdata"></script> -->
+
+</html>

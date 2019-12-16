@@ -66,7 +66,7 @@ async function create(colname, data) {
 }
 
 //测试接口
-// create('song', [{ id: 5, name: '卡路里' }]);
+// create('user', [{ name: '杨超越', password: 123456 }]);
 
 /**
   * @description: 删 
@@ -89,7 +89,7 @@ async function remove(colname, query) {
 }
 
 //测试接口
-// remove('song', { name: '月亮代表我的心' });
+// remove('user', { name: '王大锤' });
 
 /**
   * @description: 改
@@ -113,7 +113,7 @@ async function update(colname, query, newdata) {
 }
 
 //测试接口
-// update('song', { id: 3 }, { $set: { name: '蜗牛' } });
+// update('user', { name: '蜗牛' }, { $set: { name: '素珍' } });
 
 
 /**
@@ -144,7 +144,7 @@ async function find(colname, qurey) {
 
 //通用性，集合colname，查询条件qurey
 //测试接口
-// find('song', { name: '涛声依旧' });
+// find('user', { name: '涛声依旧' });
 
 //暴露接口，只要导入该模块，就拥有了CRUD功能
 module.exports = {

@@ -44,15 +44,22 @@ Router.get('/', async (req, res) => {
 //注册 /users/reg
 Router.post('/reg', async (req, res) => {
     console.log(req.body);
-    let result = await mongo.create('user', [req.body]);//调用封装好的find方法，查询数据并返回给前端
-    // console.log(result);
-    if (result.insertedCount) {
-        //插入成功
-        res.send(formatdata());
+    let { name, password } = req.body;//解构
+    if (name) {
+        //不为空才存数据
+        let result = await mongo.create('user', [req.body]);//调用封装好的find方法，查询数据并返回给前端
+        // console.log(result);
+        if (result.insertedCount) {
+            //插入成功
+            res.send(formatdata());
+        } else {
+            //插入失败
+            res.send(formatdata({ code: 0 }));
+        }
     } else {
-        //插入失败
         res.send(formatdata({ code: 0 }));
     }
+
 });
 
 //验证用户名是否存在

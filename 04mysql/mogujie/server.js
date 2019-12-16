@@ -20,5 +20,5 @@ app.use(allRouter);//引入总的路由，allRouter是一个中间件
 
 //监听端口
 app.listen(PORT, () => {
-    console.log('服务器已开启，请访问localhost:1912');
+    console.log('服务器已开启，请访问localhost:1911');
 });

@@ -76,8 +76,9 @@ Router.get('/check', async (req, res) => {
 });
 
 //登陆 users/login
-Router.post('/login', async (req, res) => {
-    let { name, password, keep } = req.body;
+Router.get('/login', async (req, res) => {
+    // let { name, password, keep } = req.body;//post请求用body获取数据
+    let { name, password, keep } = req.query;//get请求用query接收数据
     console.log(name, password, keep);
     let result = await mongo.find('user', { name, password });//调用封装好的find方法，查询数据并返回给前端 [{},{},{}]
     if (result.length) {

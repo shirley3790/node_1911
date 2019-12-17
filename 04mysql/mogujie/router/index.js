@@ -36,9 +36,11 @@ let { formatdata } = require('../utils/formatdata');//自定义模块
 //调用子路由
 Router.use('/goods', goodsRouter);//goods.js模块导出了一个中间件
 Router.use('/users', usersRouter);//goods.js模块导出了一个中间件
-Router.post('/verify', (req, res) => {
-    let { token } = req.body;
-    let result = verify(token);
+Router.get('/verify', (req, res) => {
+    // let { token } = req.body;
+    let Authorization = req.get('Authorization');
+    console.log(Authorization);
+    let result = verify(Authorization);
     // console.log(result);//校验是否通行
     if (result) {//可以直接登陆
         res.send(formatdata());

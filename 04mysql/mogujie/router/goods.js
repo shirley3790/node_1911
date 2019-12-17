@@ -11,7 +11,19 @@ const express = require('express');//模块访问：缓存
 
 const Router = express.Router();
 
+const {
+    formatdata
+} = require('../utils/formatdata');
 
+Router.get('/kucun', (req, res) => {
+    let {
+        id
+    } = req.query;
+    let result = formatdata({
+        data: 5
+    });
+    res.send(result)
+})
 
 const { mysql: query } = require('../db');//解构并重命名
 // console.log(getdata);//? {mysql:fn,mongo:fn}

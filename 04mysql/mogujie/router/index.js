@@ -31,12 +31,16 @@ Router.use(express.urlencoded({}));//为了获取req.body里面的数据
 const goodsRouter = require('./goods');
 const usersRouter = require('./users');
 let { verify } = require('../utils/token');
-let { formatdata } = require('../utils/formatdata');//自定义模块 
+let { formatdata } = require('../utils/formatdata');//自定义模块
+const uploadRouter = require('./upload');
 
 //调用子路由
 Router.use('/goods', goodsRouter);//goods.js模块导出了一个中间件
 Router.use('/users', usersRouter);//goods.js模块导出了一个中间件
+Router.use('/upload', uploadRouter);
+
 Router.get('/verify', (req, res) => {
+    //req.query
     // let { token } = req.body;
     let Authorization = req.get('Authorization');
     console.log(Authorization);

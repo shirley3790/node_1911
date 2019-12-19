@@ -33,11 +33,13 @@ const usersRouter = require('./users');
 let { verify } = require('../utils/token');
 let { formatdata } = require('../utils/formatdata');//自定义模块
 const uploadRouter = require('./upload');
+const multerRouter = require('./multer');
 
 //调用子路由
 Router.use('/goods', goodsRouter);//goods.js模块导出了一个中间件
 Router.use('/users', usersRouter);//goods.js模块导出了一个中间件
 Router.use('/upload', uploadRouter);
+Router.use('/multer', multerRouter);
 
 Router.get('/verify', (req, res) => {
     //req.query

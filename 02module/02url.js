@@ -23,9 +23,14 @@
 const url = require('url');
 
 let str = 'http://www.baidu:8888/list?name=malin&adr=guangxi#231';
-let obj = url.parse(str, true).query;//true：帮你把参数提取出来并转成对象  {name:malin,adr:guangxi}
+let data = url.parse(str, true); //true：帮你把参数提取出来并转成对象  {name:malin,adr:guangxi}
+let obj = url.parse(str, true).query; //true：帮你把参数提取出来并转成对象  {name:malin,adr:guangxi}
 console.log(obj);
 console.log(obj.name);
 
-let str2 = url.resolve('http://www.qq.com/', '/list/list.html');
-console.log(str2);
+
+let str2 = url.format(data); //把对象拼接成字符串。但是要按照指定的格式声明对象
+console.log("str2:" + str2);
+
+let str3 = url.resolve('http://www.qq.com/', '/list/list.html'); //合并网址
+console.log(str3);

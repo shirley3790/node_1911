@@ -18,6 +18,10 @@ let show = function () {
 }
 
 //暴露接口 : module.exports = 对象;
-module.exports = person;//用这种方式只能在一个模块里面导出一个接口
+// module.exports = person;//用这种方式只能在一个模块里面导出一个接口
 
 // module.exports = show;//不能有两个module.exports。否则报错
+module.exports = {
+    person,
+    show
+}; //一次导出多个接口

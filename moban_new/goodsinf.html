@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>用户管理页</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="css/uniform.css" />
+		<link rel="stylesheet" href="css/select2.css" />
+		<link rel="stylesheet" href="css/matrix-style2.css" />
+		<link rel="stylesheet" href="css/matrix-media.css" />
+		<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+	</head>
+
+	<body>
+
+		<div id="content">
+			<div id="content-header">
+				<h1>用户信息管理</h1>
+			</div>
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span12">
+
+						<div class="widget-box">
+							<div class="widget-title"> <span class="icon">
+            <input type="checkbox" id="title-checkbox" name="title-checkbox" />
+            </span>
+								<h5>用户信息表</h5>
+								</div>
+							<div class="widget-content nopadding">
+								<table class="table table-bordered table-striped with-check">
+									<thead>
+										<tr>
+											<th><i class="icon-resize-vertical"></i></th>
+											<th>id</th>
+											<th>用户名</th>
+											<th>密码</th>
+											<th>邮箱</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="checkbox" /></td>
+											<td>1</td>
+											<td contenteditable="true">张学友</td>
+											<td>456123</td>
+											<td class="center">34242777@qq.com</td>
+											<td>
+												<button type="submit" class="btn btn-success">修改并保存</button>
+												<button type="submit" class="btn btn-danger">删除</button>
+												<button type="submit" class="btn btn-info">Edit</button>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers" id="DataTables_Table_0_paginate">
+							<a tabindex="0" class="first ui-corner-tl ui-corner-bl fg-button ui-button ui-state-default ui-state-disabled" id="DataTables_Table_0_first">First</a>
+							<a tabindex="0" class="previous fg-button ui-button ui-state-default ui-state-disabled" id="DataTables_Table_0_previous">Previous</a><span><a tabindex="0" class="fg-button ui-button ui-state-default ui-state-disabled">1</a><a tabindex="0" class="fg-button ui-button ui-state-default">2</a><a tabindex="0" class="fg-button ui-button ui-state-default">3</a><a tabindex="0" class="fg-button ui-button ui-state-default">4</a><a tabindex="0" class="fg-button ui-button ui-state-default">5</a></span>
+							<a tabindex="0" class="next fg-button ui-button ui-state-default" id="DataTables_Table_0_next">Next</a>
+							<a tabindex="0" class="last ui-corner-tr ui-corner-br fg-button ui-button ui-state-default" id="DataTables_Table_0_last">Last</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+		<script src="js/jquery.ui.custom.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/jquery.uniform.js"></script>
+		<script src="js/select2.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/matrix.js"></script>
+		<script src="js/matrix.tables.js"></script>
+	</body>
+
+</html>

@@ -7,11 +7,11 @@
         * 服务器代理：帮前端获取资源  cors  服务器代理
 */
 
-const express = require('express');//函数
-const app = express();//调用express函数得到一个对象：属性 方法
+const express = require('express'); //函数
+const app = express(); //调用express函数得到一个对象：属性 方法
 
 //开启静态资源服务器
-app.use(express.static('./'));//express.static()中间件
+app.use(express.static('./')); //express.static()中间件
 
 //路由的设置:你输入的路径不同，我给你的响应不同，按需响应
 //用app.get() 来响应客户端的get的请求
@@ -32,22 +32,20 @@ app.get('/reg', (req, res) => {
 });
 
 app.get('/cart', (req, res) => {
-    let goodslist = [
-        {
-            gid: 1,
-            title: '苹果',
-            price: 8999
-        }, {
-            gid: 2,
-            title: '华为',
-            price: 1888
-        }
-    ];
+    let goodslist = [{
+        gid: 1,
+        title: '苹果',
+        price: 8999
+    }, {
+        gid: 2,
+        title: '华为',
+        price: 1888
+    }];
     res.send(goodslist);
 });
 
 
-let ggs = [//商品数据
+let ggs = [ //商品数据
     {
         gid: 1,
         title: '苹果',
@@ -66,10 +64,13 @@ let ggs = [//商品数据
 //获取带参数路由的做法：
 //利用req.query获取前端传过来了参数  http://localhost:5566/good?gid=3&color=red
 app.get('/good', (req, res) => {
-    let { gid, color } = req.query;//解构  req.query 得到的就是一个对象 {gid:3,color:red}
+    let {
+        gid,
+        color
+    } = req.query; //解构  req.query 得到的就是一个对象 {gid:3,color:red}
     // console.log(gid, color);
     //查询数据库 gid=3对应的商品数据，传给前端
-    let good = ggs.filter((item, index) => {//some every reduce filter map
+    let good = ggs.filter((item, index) => { //some every reduce filter map
         return item.gid == gid;
     });
     // console.log(good);
@@ -78,13 +79,13 @@ app.get('/good', (req, res) => {
     if (good.length) {
         //不为零：成功
         data = {
-            type: 1,//0失败  1成功
+            type: 1, //0失败  1成功
             word: '成功',
             data: good
         }
     } else {
         data = {
-            type: 0,//0失败  1成功
+            type: 0, //0失败  1成功
             word: '失败',
             data: []
         }
@@ -95,7 +96,6 @@ app.get('/good', (req, res) => {
 
 
 //开启服务器
-app.listen(5566, () => {
-    console.log('服务器开启了，请访问localhost:5566');
+app.listen(1911, () => {
+    console.log('服务器开启了，请访问localhost:1911');
 });
-

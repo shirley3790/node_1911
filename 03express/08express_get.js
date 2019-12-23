@@ -7,11 +7,11 @@
         * 服务器代理：帮前端获取资源  cors  服务器代理
 */
 
-const express = require('express');//函数
-const app = express();//调用express函数得到一个对象：属性 方法
+const express = require('express'); //函数
+const app = express(); //调用express函数得到一个对象：属性 方法
 
 //开启静态资源服务器
-app.use(express.static('./'));//express.static()中间件
+app.use(express.static('./')); //express.static()中间件
 
 //路由的设置:你输入的路径不同，我给你的响应不同，按需响应
 //用app.get() 来响应客户端的get的请求
@@ -32,23 +32,20 @@ app.get('/reg', (req, res) => {
 });
 
 app.get('/cart', (req, res) => {
-    let goodslist = [
-        {
-            gid: 1,
-            title: '苹果',
-            price: 8999
-        }, {
-            gid: 2,
-            title: '华为',
-            price: 1888
-        }
-    ];
+    let goodslist = [{
+        gid: 1,
+        title: '苹果',
+        price: 8999
+    }, {
+        gid: 2,
+        title: '华为',
+        price: 1888
+    }];
     res.send(goodslist);
 });
 
 
 //开启服务器
-app.listen(5566, () => {
-    console.log('服务器开启了，请访问localhost:5566');
+app.listen(1912, () => {
+    console.log('服务器开启了，请访问localhost:1912');
 });
-

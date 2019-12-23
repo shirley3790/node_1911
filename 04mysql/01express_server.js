@@ -3,7 +3,7 @@
 const express = require('express');
 
 //开启服务器
-const app = express();//返回对象app
+const app = express(); //返回对象app
 
 //借助express的中间件来开启静态资源服务器
 //中间件 express.static('./') 服务器根目录root
@@ -30,7 +30,10 @@ const app = express();//返回对象app
             * 自定义中间件
             * 第三方中间件
 */
-app.use(express.static('./', { index: './main.html', maxAge: 3600000 }));//自动访问你的index.html 内置的static()中间件没有设置next();如果路径满足这里，就进入这个中间件，不会再往下走
+app.use(express.static('./', {
+    index: './main.html',
+    maxAge: 3600000
+})); //自动访问你的index.html 内置的static()中间件没有设置next();如果路径满足这里，就进入这个中间件，不会再往下走
 
 //定义一个中间件1
 // app.use('/goods', (req, res, next) => {
@@ -68,12 +71,22 @@ app.get('/login', (req, res) => { //获取全部商品数据
 })
 
 app.get('/goods/:id', (req, res) => { //获取id为xx商品数据
-    let { id } = req.params;
+    let {
+        id
+    } = req.params;
     console.log('id是：' + id + '的商品数据');
     res.send('id是：' + id + '的商品数据');
 });
 
+let bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+});
+app.use(urlencodedParser, express.json());
+
 app.post('/goods', (req, res) => { //提交数据
+    let obj = req.body;
+    console.log(obj);
     console.log('添加成功');
     res.send('添加成功');
 });
@@ -87,6 +100,8 @@ app.delete('/goods/:id', (req, res) => { //删除数据
     console.log('删除成功');
     res.send('删除成功');
 });
+
+
 
 /*
     网站接口：

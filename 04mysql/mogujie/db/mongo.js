@@ -1,4 +1,3 @@
-
 /*
     需求：实现数据的CRUD操作
         * 连接数据库:connect()
@@ -6,8 +5,13 @@
         * 关闭数据库 :close() 先有的
 */
 
-const { MongoClient } = require('mongodb');//引入第三方模块
-const { DBurl, DBname } = require('../config.json');
+const {
+    MongoClient
+} = require('mongodb'); //引入第三方模块
+const {
+    DBurl,
+    DBname
+} = require('../config.json');
 
 
 //封装一个函数 connect() ：连接mongoDB
@@ -39,23 +43,29 @@ async function connect() {
     let client = await MongoClient.connect(DBurl);
     // console.log(client);
     let db = client.db(DBname);
-    return { db, client };
+    return {
+        db,
+        client
+    };
 
 }
 // connect();
 
 /**
-  * @description: 增
-  * @param {string} 集合名字 colname
-  * @param {array} 数组      data
-  * @return: object
-  */
+ * @description: 增
+ * @param {string} 集合名字 colname
+ * @param {array} 数组      data
+ * @return: object
+ */
 
 async function create(colname, data) {
     //1.连接数据库
-    let { db, client } = await connect();
+    let {
+        db,
+        client
+    } = await connect();
     //2.找到集合
-    let col = db.collection(colname);//无则自动创建
+    let col = db.collection(colname); //无则自动创建
     //3.插入数据到集合
     let result = await col.insertMany(data);
     // console.log(result);
@@ -69,17 +79,20 @@ async function create(colname, data) {
 // create('user', [{ name: '杨超越', password: 123456 }]);
 
 /**
-  * @description: 删 
-  * @param {string} 集合名字 colname
-  * @param {object} 条件     query
-  * @return: object
-  */
+ * @description: 删 
+ * @param {string} 集合名字 colname
+ * @param {object} 条件     query
+ * @return: object
+ */
 
 async function remove(colname, query) {
     //1.连接数据库
-    let { db, client } = await connect();
+    let {
+        db,
+        client
+    } = await connect();
     //2.找到集合
-    let col = db.collection(colname);//无则自动创建
+    let col = db.collection(colname); //无则自动创建
     //3.删除数据
     let result = await col.deleteMany(query);
     // console.log(result);
@@ -92,18 +105,21 @@ async function remove(colname, query) {
 // remove('user', { name: '王大锤' });
 
 /**
-  * @description: 改
-  * @param {string} 集合名字 colname
-  * @param {object} 条件     query
-  * @param {object} 数据     newdata
-  * @return: object
-  */
+ * @description: 改
+ * @param {string} 集合名字 colname
+ * @param {object} 条件     query
+ * @param {object} 数据     newdata
+ * @return: object
+ */
 
 async function update(colname, query, newdata) {
     //1.连接数据库
-    let { db, client } = await connect();
+    let {
+        db,
+        client
+    } = await connect();
     //2.找到集合
-    let col = db.collection(colname);//无则自动创建
+    let col = db.collection(colname); //无则自动创建
     //3.删除数据
     let result = await col.updateMany(query, newdata);
     // console.log(result);
@@ -117,30 +133,45 @@ async function update(colname, query, newdata) {
 
 
 /**
-  * @description: 查
-  * @param {string} 集合名字 colname
-  * @param {object} 条件     query
-  * @return: object
-  */
+ * @description: 查
+ * @param {string} 集合名字 colname
+ * @param {object} 条件     query
+ * @return: object
+ */
 
 //查找功能 find()
 async function find(colname, qurey) {
     try {
-        let { db, client } = await connect();//await只能接收成功的回调resolve
+        let {
+            db,
+            client
+        } = await connect(); //await只能接收成功的回调resolve
         // obj.then().catch()
-        let col = db.collection(colname);//无则自动创建
+        let col = db.collection(colname); //无则自动创建
         //数据的CRUD操作
-        let result = await col.find(qurey).toArray();//查找数据
+        let result = await col.find(qurey).toArray(); //查找数据
         // console.log(result);
 
         //关闭数据库
         client.close();
-        return result;//返回查询结果,返回给入口
-    } catch{//接收到reject的数据
+        return result; //返回查询结果,返回给入口
+    } catch { //接收到reject的数据
         console.log(err);
     }
 
 }
+
+/* page: 页码；pagesize: 每页的数量 */
+// let page = req.body.page;
+// let pagesize = req.body.pagesize;
+// let queryResult = collection.find(queryCondition).limit(pageSize).skip((page - 1) * pageSize).sort({'_id': -1});
+// queryResult.exec((err, value) => {
+//   if(err) {
+//     reject(err);
+//   } else {
+//     resolve({total, value});
+//   }
+// })
 
 //通用性，集合colname，查询条件qurey
 //测试接口

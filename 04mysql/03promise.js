@@ -23,9 +23,11 @@ let p2 = new Promise((resolve, reject) => {
 });
 
 // //调用
-p1.then(p2)
 
-p2.then();
+p2.then()
+p1.then()
+
+// p2.then();
 
 //async和await的使用
 async function show() {

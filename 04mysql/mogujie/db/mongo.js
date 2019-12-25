@@ -140,7 +140,7 @@ async function update(colname, query, newdata) {
  */
 
 //查找功能 find()
-async function find(colname, qurey) {
+async function find(colname, qurey, page, num) {
     try {
         let {
             db,
@@ -149,8 +149,8 @@ async function find(colname, qurey) {
         // obj.then().catch()
         let col = db.collection(colname); //无则自动创建
         //数据的CRUD操作
-        let result = await col.find(qurey).toArray(); //查找数据
-        // console.log(result);
+        let result = await col.find(qurey).limit(num).skip((page - 1) * num).toArray(); //查找数据
+        console.log(result);
 
         //关闭数据库
         client.close();
@@ -160,6 +160,8 @@ async function find(colname, qurey) {
     }
 
 }
+
+// find('song', {}, 2, 2);
 
 /* page: 页码；pagesize: 每页的数量 */
 // let page = req.body.page;

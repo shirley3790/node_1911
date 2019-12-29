@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "http-proxy-middleware": "^0.20.0",
     "jquery": "^3.4.1",
+    "multer": "^1.4.2",
     "request": "^2.88.0",
     "ws": "^7.2.0",
     "zlib": "^1.0.5"

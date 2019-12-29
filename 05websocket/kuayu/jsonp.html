@@ -14,7 +14,6 @@
 </body>
 <script src="js/jquery.min.js"></script>
 <script>
-
     // $('#btn').click(() => {
     //     //不是跨域
     //     //http://localhost:1911/jsonp.html
@@ -37,7 +36,7 @@
         ///http://localhost:1912/app.js
         $.ajax({
             type: 'get',
-            url: 'http://localhost:1912/jsonp',//'Access-Control-Allow-Origin' 现在就属于跨域
+            url: 'http://localhost:1912/jsonp', //'Access-Control-Allow-Origin' 现在就属于跨域
             dataType: 'jsonp',
             jsonp: 'callback',
             success: data => {
@@ -45,8 +44,6 @@
             }
         })
     });
-
-
 </script>
 <script>
     //全局函数

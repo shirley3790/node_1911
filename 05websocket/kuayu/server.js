@@ -10,10 +10,16 @@ app.use(express.static('./'));
 
 //4.1912端口下的数据接口  后端实现：jsonp接口开放
 app.get('/jsonp', (req, res) => {
-    let { callback } = req.query;//{callback : 'getdata'}
+    let {
+        callback
+    } = req.query; //{callback : 'getdata'}
     // console.log(callback);
-    let data = { username: 'malin', password: 123456, gender: 'female' };
-    res.send(`${callback}(${JSON.stringify(data)})`);//getdata(data)
+    let data = {
+        username: 'malin',
+        password: 123456,
+        gender: 'female'
+    };
+    res.send(`${callback}(${JSON.stringify(data)})`); //getdata(data)
     // res.send(`666`);//getdata(data)
 });
 
@@ -24,8 +30,8 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "PUT,PATCH,POST,GET,DELETE,OPTIONS");
 
     // 跨域请求CORS中的预请求
-    if (req.method == "OPTIONS") {//特殊请求：发送了请求头的那些请求
-        res.sendStatus(200);/*让options请求快速返回*/
+    if (req.method == "OPTIONS") { //特殊请求：发送了请求头的那些请求
+        res.sendStatus(200); /*让options请求快速返回*/
     } else {
         next();
     }
@@ -52,6 +58,6 @@ app.use('/sinaapi', proxy({
     }
 }));
 
-app.listen(1912, () => {
-    console.log('服务器已经开启，请访问1912端口');
+app.listen(1913, () => {
+    console.log('服务器已经开启，请访问1913端口');
 });

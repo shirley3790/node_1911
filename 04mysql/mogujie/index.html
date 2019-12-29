@@ -10,6 +10,85 @@
 
 <body>
     <h1>今天星期五，明天补课</h1>
+    <p>
+        <img src="" alt="" id="tx" width="250px">
+    </p>
+    <!-- 上传单张图片 -->
+    <input type="file" id="file" name="touxiang">
+    <input type="button" value="上传头像" id="btn">
+    <br>
+    <!-- 上传多个图片 -->
+    <input type="file" id="goodimg" name="goodimg" multiple>
+    <input type="button" value="上传商品" id="btn2">
+    <p id="demo">
+        <!-- <img src="" alt="" width="250px"> -->
+    </p>
 </body>
+<script src="js/jquery.min.js"></script>
+<script>
+    /*
+        FormData() H5新特性：发送数据给后端特别是文件的时候使用的
+            * new FormData() 实例化
+            * 方法
+                * set(key,value)
+                * append(key, value)
+                * get(key)
+                * has(key)
+                * getAll(key)
+                * delete(key)
+                * 
+                * https://www.jianshu.com/p/cc650075b33b
+    */
+
+    $('#btn').click(() => {
+        var formData = new FormData();
+        formData.append('touxiang', $('#file')[0].files[0]);
+        $.ajax({
+            url: '/upload/touxiang',
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (str) {
+                console.log(str);
+                let path = str;
+                $('#tx').attr('src', path); //上传头像
+            }
+        })
+
+    })
+
+    $('#btn2').click(() => {
+        var formData = new FormData();
+        // formData.append('touxiang', $('#goodimg')[0].files[0]);
+        for (let i in $('#goodimg')[0].files) {
+            formData.append('goods', $('#goodimg')[0].files[i])
+        }
+        $.ajax({
+            url: '/upload/goods',
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (str) {
+                console.log(str);
+                // let path = str;
+                // $('#tx').attr('src', path); //上传头像
+                let arr = str.split('&');
+                console.log(arr);
+
+                let str2 = arr.map(item => {
+                    return `<img src="${item}" alt="" width="250px"><br>`;
+                }).join('');
+                console.log(str2);
+
+                $('#demo').html(str2);
+            }
+        })
+
+    })
+</script>
 
 </html>
